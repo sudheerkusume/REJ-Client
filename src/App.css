@@ -5376,7 +5376,7 @@ body {
 .auth-left {
   position: relative;
   width: 55%;
-  background-position: center;
+  background-position: left center;
   background-size: cover;
   background-repeat: no-repeat;
   display: flex;
@@ -5391,9 +5391,9 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(17, 24, 39, 0.85) 0%, rgba(79, 70, 229, 0.9) 100%);
+  background: none;
   z-index: 1;
-  opacity: 0.9;
+  opacity: 0;
 }
 
 .auth-left-content {
@@ -5550,7 +5550,7 @@ body {
   width: 100%;
   padding: 18px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+  background: linear-gradient(135deg, #f6b93b 0%, #c084fc 50%, #a78bfa 100%);
   border: none;
   color: white;
   font-weight: 700;
@@ -5559,13 +5559,13 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 15px;
-  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+  box-shadow: 0 10px 25px -5px rgba(192, 132, 252, 0.4);
 }
 
 .auth-btn:hover {
-  background: linear-gradient(135deg, #4338ca 0%, #3730a3 100%);
+  background: linear-gradient(135deg, #e5a835 0%, #a855f7 50%, #8b5cf6 100%);
   transform: translateY(-2px);
-  box-shadow: 0 20px 30px -10px rgba(79, 70, 229, 0.5);
+  box-shadow: 0 20px 30px -10px rgba(168, 85, 247, 0.5);
 }
 
 .auth-footer {
@@ -5586,6 +5586,53 @@ body {
 .auth-footer span:hover {
   color: #3730a3;
   text-decoration: underline;
+}
+
+/* Password Input Wrapper */
+.auth-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.auth-input-wrapper .auth-input {
+  padding-right: 50px;
+}
+
+.auth-eye-icon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #94a3b8;
+  font-size: 18px;
+  transition: color 0.2s ease;
+}
+
+.auth-eye-icon:hover {
+  color: #4f46e5;
+}
+
+/* Role Info Box */
+.role-info-box {
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 10px;
+}
+
+.role-info-box strong {
+  color: #3730a3;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.role-info-box p {
+  color: #4f46e5;
+  font-size: 14px;
+  margin: 0;
 }
 
 /* Responsive */
