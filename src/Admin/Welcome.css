@@ -1,0 +1,381 @@
+/* Welcome Dashboard CSS */
+.welcome-dashboard {
+    padding: 24px;
+    background-color: #f8fafc;
+    min-height: 100vh;
+}
+
+/* Common Card Style */
+.dash-card-premium {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+}
+
+.dash-card-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Wallet/Balance Section */
+.balance-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.balance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.balance-title {
+    font-size: 14px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.balance-amount {
+    font-size: 42px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -1.5px;
+    line-height: 1;
+    margin: 10px 0;
+}
+
+.balance-growth {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #10b981;
+}
+
+.balance-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn-dash {
+    flex: 1;
+    padding: 12px 0;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: poPoppins;
+    transition: all 0.2s;
+}
+
+.btn-dash-dark {
+    background: #1e293b;
+    color: #ffffff;
+}
+
+.btn-dash-dark:hover {
+    background: #0f172a;
+}
+
+.btn-dash-green {
+    background: #10b981;
+    color: #ffffff;
+}
+
+.btn-dash-green:hover {
+    background: #059669;
+}
+
+/* Quick Actions */
+.quick-actions-grid {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.action-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: poPoppins;
+}
+
+.action-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: white;
+    transition: transform 0.2s;
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+}
+
+.action-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #475569;
+}
+
+.bg-green {
+    background: #10b981;
+}
+
+.bg-dark-green {
+    background: #064e3b;
+}
+
+.bg-teal {
+    background: #0d9488;
+}
+
+.bg-emerald {
+    background: #059669;
+}
+
+/* Lists & Tables */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.list-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.btn-more {
+    font-size: 13px;
+    color: #10b981;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: poPoppins;
+}
+
+/* Top Movers */
+.movers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mover-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.mover-item:last-child {
+    border-bottom: none;
+}
+
+.mover-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mover-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    background: #f1f5f9;
+}
+
+.mover-name h6 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.mover-name span {
+    font-size: 11px;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.mover-stats {
+    text-align: right;
+}
+
+.mover-price {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.mover-change {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.text-success {
+    color: #10b981 !important;
+}
+
+/* Main Chart Section */
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.big-stat-title {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.big-stat-amount {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -1px;
+}
+
+.time-filters {
+    display: flex;
+    gap: 4px;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 12px;
+}
+
+.filter-btn {
+    border: none;
+    background: transparent;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    border-radius: 8px;
+    cursor: poPoppins;
+}
+
+.filter-btn.active {
+    background: #ffffff;
+    color: #0f172a;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Watchlist Table */
+.watchlist-table {
+    width: 100%;
+}
+
+.watchlist-table th {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 500;
+    padding-bottom: 16px;
+    text-align: left;
+}
+
+.watchlist-table td {
+    padding: 12px 0;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.watchlist-table tr:last-child td {
+    border-bottom: none;
+}
+
+.candidate-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.candidate-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.candidate-info h6 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.candidate-info span {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.btn-buy-sm {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: poPoppins;
+}
+
+.btn-buy-sm:hover {
+    background: #059669;
+}
+
+.status-review {
+    color: #f59e0b;
+}
+
+.status-shortlisted {
+    color: #10b981;
+}
+
+.status-rejected {
+    color: #ef4444;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+    .welcome-dashboard {
+        padding: 16px;
+    }
+
+    .balance-amount {
+        font-size: 32px;
+    }
+}

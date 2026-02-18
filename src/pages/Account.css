@@ -1,0 +1,359 @@
+/* Account Page - LUXE Redesign */
+
+.account-page-wrapper {
+    background-color: #f8fafc;
+    min-height: 100vh;
+    padding-bottom: 80px;
+    padding-top: 40px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.account-container {
+    max-width: 1440px;
+    width: 95%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.lux-dashboard-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+}
+
+/* ================= SIDEBAR ================= */
+.lux-sidebar {
+    background: white;
+    border-radius: 20px;
+    padding: 30px 20px;
+    height: fit-content;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+    position: sticky;
+    top: 100px;
+    border: 1px solid #f1f5f9;
+}
+
+.user-mini-profile {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.user-avatar-circle {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+    background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+    color: white;
+    font-size: 32px;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
+}
+
+.user-name-display {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.user-role-display {
+    font-size: 13px;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    font-weight: 500;
+}
+
+.lux-nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.lux-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    color: #64748b;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: poPoppins;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+
+.lux-nav-item:hover {
+    background: #f8fafc;
+    color: #0f172a;
+}
+
+.lux-nav-item.active {
+    background: #0f172a;
+    color: white;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+}
+
+.lux-nav-item svg {
+    font-size: 18px;
+}
+
+
+/* ================= CONTENT AREA ================= */
+.dashboard-header {
+    margin-bottom: 30px;
+}
+
+.dashboard-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.dashboard-subtitle {
+    color: #64748b;
+    font-size: 15px;
+}
+
+/* Stats Cards */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: transform 0.3s;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.stat-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.bg-blue-light {
+    background: #eff6ff;
+    color: #3b82f6;
+}
+
+.bg-green-light {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+.bg-purple-light {
+    background: #faf5ff;
+    color: #a855f7;
+}
+
+.stat-info h4 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    color: #0f172a;
+}
+
+.stat-info p {
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* Content Panel */
+.content-panel {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.panel-header {
+    padding: 24px 30px;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    color: #0f172a;
+}
+
+/* Table Style for Applications */
+.lux-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.lux-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.lux-table th {
+    text-align: left;
+    padding: 16px 30px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 600;
+    background: #f8fafc;
+    letter-spacing: 0.5px;
+}
+
+.lux-table td {
+    padding: 20px 30px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.lux-table tr:hover {
+    background: #f8fafc;
+}
+
+.job-cell {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.company-logo-tiny {
+    width: 36px;
+    height: 36px;
+    background: #e2e8f0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #475569;
+    font-size: 14px;
+}
+
+.job-info h5 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0 0 2px 0;
+}
+
+.job-info span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Status Badges */
+.status-pill {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+}
+
+.status-pending {
+    background: #fff7ed;
+    color: #ea580c;
+    border: 1px solid #ffedd5;
+}
+
+.status-accepted {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #dcfce7;
+}
+
+.status-rejected {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fee2e2;
+}
+
+/* Action Button */
+.btn-action-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    cursor: poPoppins;
+}
+
+.btn-action-icon:hover {
+    background: #fee2e2;
+    border-color: #fee2e2;
+    color: #dc2626;
+}
+
+/* Empty State */
+.lux-empty-state {
+    text-align: center;
+    padding: 60px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .lux-dashboard-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .lux-sidebar {
+        position: static;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .lux-nav-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .stats-row {
+        grid-template-columns: 1fr;
+    }
+}
