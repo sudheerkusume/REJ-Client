@@ -204,7 +204,7 @@ const AnimCounter = ({ target }) => {
 /* ═══════════════ MAIN WELCOME COMPONENT ═══════════════ */
 const Welcome = ({ userName }) => {
     const { token } = useAuth();
-    const [stats, setStats] = useState({ total: 0, shortlisted: 0, selected: 0, rejected: 0 });
+    const [stats, setStats] = useState({ total: 0, shortlisted: 0, selected: 0, rejected: 0, activeJobs: 0 });
     const [recentApplications, setRecentApplications] = useState([]);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('Applications');
@@ -239,7 +239,7 @@ const Welcome = ({ userName }) => {
                     api.get("/admin/dashboard-stats"),
                     api.get("/admin/applications")
                 ]);
-                setStats(statsRes.data);
+                setStats(prev => ({ ...prev, ...statsRes.data }));
                 const sortedApps = (appsRes.data || [])
                     .sort((a, b) => new Date(b.appliedAt) - new Date(a.appliedAt));
                 setRecentApplications(sortedApps.slice(0, 10));
@@ -296,8 +296,12 @@ const Welcome = ({ userName }) => {
     };
 
     const getResourceData = () => {
-        const sources = ['Tele Caller', 'Channel Partners', 'Real Estate Sales', 'CRM Executive'];
-        return sources.map((source) => ({ name: source, value: Math.floor(Math.random() * 5) + 1 }));
+        const counts = {};
+        recentApplications.forEach(app => {
+            const cat = app.jobId?.title || 'Other';
+            counts[cat] = (counts[cat] || 0) + 1;
+        });
+        return Object.keys(counts).map(key => ({ name: key, value: counts[key] }));
     };
 
     // Greeting
@@ -321,7 +325,7 @@ const Welcome = ({ userName }) => {
         { label: "Applications", value: stats.total, icon: <FiBriefcase size={20} />, trend: "+12%" },
         { label: "Shortlisted", value: stats.shortlisted, icon: <FiUsers size={20} />, trend: "+8%" },
         { label: "Selected", value: stats.selected, icon: <FiCheckCircle size={20} />, trend: "+3%" },
-        { label: "Active Jobs", value: stats.rejected || 6, icon: <FiMonitor size={20} />, trend: "+2" }
+        { label: "Active Jobs", value: stats.activeJobs ?? 0, icon: <FiMonitor size={20} />, trend: "+2" }
     ];
 
     const theme = COLORS[activeTab] || COLORS.Applications;
@@ -538,18 +542,20 @@ const Welcome = ({ userName }) => {
                                 <div style={{ height: '220px', position: 'relative' }}>
                                     <ResponsiveContainer width="100%" height="100%">
                                         <PieChart>
-                                            <Pie data={resourceData} cx="50%" cy="60%"
+                                            <Pie data={resourceData.length ? resourceData : [{ name: 'None', value: 1 }]} cx="50%" cy="60%"
                                                 startAngle={180} endAngle={0}
                                                 innerRadius={70} outerRadius={90}
                                                 paddingAngle={3} dataKey="value"
                                                 animationDuration={1500} stroke="none">
-                                                {resourceData.map((_, i) => <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />)}
+                                                {resourceData.length
+                                                    ? resourceData.map((_, i) => <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />)
+                                                    : <Cell fill="#e2e8f0" />}
                                             </Pie>
                                             <RechartsTooltip content={<CustomTooltip />} />
                                         </PieChart>
                                     </ResponsiveContainer>
                                     <div className="position-absolute start-50 translate-middle text-center" style={{ top: '55%' }}>
-                                        <h2 className="fw-bold mb-0" style={{ color: '#0f172a', letterSpacing: '-1px' }}>9</h2>
+                                        <h2 className="fw-bold mb-0" style={{ color: '#0f172a', letterSpacing: '-1px' }}>{resourceData.reduce((sum, r) => sum + r.value, 0)}</h2>
                                         <small style={{ color: '#94a3b8', fontWeight: 600, fontSize: '10px' }}>Applicants</small>
                                     </div>
                                 </div>

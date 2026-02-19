@@ -222,7 +222,7 @@ const ViewJobs = () => {
     // Fetch jobs
     const fetchJobs = async () => {
         try {
-            const res = await api.get("/jobCategories");
+            const res = await api.get("/admin/jobCategories");
             setJobs(res.data || []);
         } catch (err) {
             console.error(err);
