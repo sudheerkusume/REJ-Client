@@ -202,8 +202,9 @@ const AnimCounter = ({ target }) => {
 };
 
 /* ═══════════════ MAIN WELCOME COMPONENT ═══════════════ */
-const Welcome = () => {
-    const [token] = useContext(loginStatus);
+const Welcome = ({ userName }) => {
+    const [contextToken] = useContext(loginStatus);
+    const token = contextToken || localStorage.getItem("authToken");
     const [stats, setStats] = useState({ total: 0, shortlisted: 0, selected: 0, rejected: 0 });
     const [recentApplications, setRecentApplications] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -368,7 +369,7 @@ const Welcome = () => {
                 <div className="d-flex justify-content-between align-items-center flex-wrap gap-3" style={{ position: 'relative', zIndex: 2 }}>
                     <div>
                         <h1 style={{ fontSize: '26px', fontWeight: 800, margin: 0, letterSpacing: '-0.8px', lineHeight: 1.2, color: '#0f172a' }}>
-                            {greeting()}, Admin <span style={{ fontSize: '28px' }}>👋</span>
+                            {greeting()}, {userName || 'Admin'} <span style={{ fontSize: '28px' }}>👋</span>
                         </h1>
                         <p className="mb-0 d-flex align-items-center gap-2" style={{ fontSize: '13px', color: '#94a3b8', fontWeight: 500, marginTop: '6px' }}>
                             <FiActivity size={14} style={{ color: '#6366f1' }} />

@@ -260,7 +260,7 @@ const Dashboard = () => {
 
     const dashboardview = () => {
         if (view === "") {
-            return <Welcome />;
+            return <Welcome userName={user?.name || 'Admin'} />;
         }
         else if (view === "Jobs") {
             return <AddJobs />;
