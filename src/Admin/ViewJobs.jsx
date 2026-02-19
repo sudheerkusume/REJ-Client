@@ -755,14 +755,14 @@ const ViewJobs = () => {
                 .vj-modal-content {
                     background: #fff;
                     border-radius: 24px;
-                    width: 90%;
-                    max-width: 680px;
-                    max-height: 85vh;
+                    width: 95%;
+                    max-width: 900px;
+                    max-height: 95vh;
                     display: flex; flex-direction: column;
                     box-shadow: 0 25px 50px -12px rgba(0,0,0,0.2);
-                    animation: vjSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                    animation: vjFadeIn 0.3s ease, vjSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
                 }
-                .vj-modal-lg { max-width: 720px; }
+                .vj-modal-lg { max-width: 1200px; }
                 .vj-modal-header {
                     display: flex; justify-content: space-between; align-items: flex-start;
                     padding: 24px 28px 16px;
