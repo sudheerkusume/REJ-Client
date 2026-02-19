@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../config/api";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
@@ -11,13 +11,13 @@ import {
 } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
-import { loginStatus } from "../App";
+import { useAuth } from "../context/AuthContext";
 
 const JobSingle = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [token] = useContext(loginStatus);
+  const { token } = useAuth();
 
   const [job, setJob] = useState(null);
   const [company, setCompany] = useState(null);

@@ -193,16 +193,15 @@
 
 // export default AddRecruiter;
 
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../config/api";
 import { useNavigate } from "react-router-dom";
-import { loginStatus } from "../App";
+import { useAuth } from "../context/AuthContext";
 
 const AddRecruiter = () => {
     const navigate = useNavigate();
 
-    // ✅ USE CONTEXT TOKEN (SAME AS ADMIN LOGIN)
-    const [token] = useContext(loginStatus);
+    const { token } = useAuth();
 
     const [loading, setLoading] = useState(false);
 
