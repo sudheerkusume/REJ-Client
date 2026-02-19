@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../config/api";
 import React, { useEffect, useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import {
@@ -22,8 +22,8 @@ const Services = () => {
     const [activeService, setActiveService] = useState(null);
 
     useEffect(() => {
-        axios
-            .get("https://rej-server.onrender.com/Services")
+        api
+            .get("/Services")
             .then((res) => {
                 setServices(res.data);
                 if (res.data.length > 0) {

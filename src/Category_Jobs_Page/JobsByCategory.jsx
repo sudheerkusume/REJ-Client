@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../config/api";
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 
@@ -7,8 +7,8 @@ const JobsByCategory = () => {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("https://rej-server.onrender.com/jobCategories")
+    api
+      .get("/jobCategories")
       .then(res =>
         setJobs(res.data.filter(j => j.category === category))
       );

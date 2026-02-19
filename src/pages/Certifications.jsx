@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../config/api";
 import React, { useEffect, useState } from "react";
 import { BsClock, BsAward, BsLaptop, BsStarFill, BsArrowRight } from "react-icons/bs";
 
@@ -6,8 +6,8 @@ const Certifications = () => {
     const [certs, setCerts] = useState([]);
 
     useEffect(() => {
-        axios
-            .get("https://rej-server.onrender.com/Certifications")
+        api
+            .get("/Certifications")
             .then((res) => setCerts(res.data))
             .catch((err) => console.log(err));
     }, []);

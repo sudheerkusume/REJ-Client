@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../config/api";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward, IoIosArrowDown, } from "react-icons/io";
@@ -27,8 +27,8 @@ const JobsPage = () => {
   });
 
   useEffect(() => {
-    axios
-      .get("https://rej-server.onrender.com/jobCategories")
+    api
+      .get("/jobCategories")
       .then((res) => {
         setJobs(res.data);
 

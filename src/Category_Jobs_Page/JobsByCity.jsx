@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../config/api";
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 
@@ -7,7 +7,7 @@ const JobsByCity = () => {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    axios.get("https://rej-server.onrender.com/jobCategories").then((res) => {
+    api.get("/jobCategories").then((res) => {
       const filtered = res.data.filter(
         (job) =>
           job.location.toLowerCase() ===

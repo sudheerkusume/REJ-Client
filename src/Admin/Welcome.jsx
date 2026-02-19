@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useRef, useCallback } from "react";
-import axios from "axios";
+import api from "../config/api";
 import { loginStatus } from "../App";
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
@@ -236,12 +236,8 @@ const Welcome = () => {
         const fetchData = async () => {
             try {
                 const [statsRes, appsRes] = await Promise.all([
-                    axios.get("https://rej-server.onrender.com/admin/dashboard-stats", {
-                        headers: { Authorization: `Bearer ${token}` }
-                    }),
-                    axios.get("https://rej-server.onrender.com/admin/applications", {
-                        headers: { Authorization: `Bearer ${token}` }
-                    })
+                    api.get("/admin/dashboard-stats"),
+                    api.get("/admin/applications")
                 ]);
                 setStats(statsRes.data);
                 const sortedApps = (appsRes.data || [])

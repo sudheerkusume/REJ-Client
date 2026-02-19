@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import api from "../config/api";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   BsGeoAlt,
@@ -35,8 +35,8 @@ const JobSingle = () => {
     const fetchData = async () => {
       try {
         const [jobsRes, companiesRes] = await Promise.all([
-          axios.get("https://rej-server.onrender.com/jobCategories"),
-          axios.get("https://rej-server.onrender.com/companies")
+          api.get("/jobCategories"),
+          api.get("/companies")
         ]);
 
         setAllCompanies(companiesRes.data);
@@ -83,15 +83,10 @@ const JobSingle = () => {
     try {
       setSaving(true);
 
-      await axios.post(
-        "https://rej-server.onrender.com/saved-jobs",
+      await api.post(
+        "/saved-jobs",
         {
           jobId: job._id || job.id
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
         }
       );
 
@@ -107,12 +102,8 @@ const JobSingle = () => {
   useEffect(() => {
     if (!job || !token) return;
 
-    axios
-      .get("https://rej-server.onrender.com/my-applications", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+    api
+      .get("/my-applications")
       .then((res) => {
         const alreadyApplied = res.data.some(
           (app) => String(app.jobId) === String(job._id || job.id)
@@ -149,16 +140,11 @@ const JobSingle = () => {
     try {
       setLoadingApply(true);
 
-      const res = await axios.post(
-        "https://rej-server.onrender.com/apply-job",
+      const res = await api.post(
+        "/apply-job",
         {
           jobId,
           companyId
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
         }
       );
 

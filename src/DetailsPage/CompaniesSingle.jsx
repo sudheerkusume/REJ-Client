@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import axios from "axios";
+import api from "../config/api";
 import {
     BsGeoAlt,
     BsPeople,
@@ -33,8 +33,8 @@ const CompaniesSingle = () => {
         const fetchData = async () => {
             try {
                 const [companiesRes, jobsRes] = await Promise.all([
-                    axios.get("https://rej-server.onrender.com/companies"),
-                    axios.get("https://rej-server.onrender.com/jobCategories")
+                    api.get("/companies"),
+                    api.get("/jobCategories")
                 ]);
 
                 const selectedCompany = companiesRes.data.find(

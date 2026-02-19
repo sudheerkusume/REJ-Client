@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../config/api";
 
 const AddJobs = ({ onJobAdded, onClose }) => {
     const [companies, setCompanies] = useState([]);
@@ -26,7 +26,7 @@ const AddJobs = ({ onJobAdded, onClose }) => {
     useEffect(() => {
         const fetchCompanies = async () => {
             try {
-                const res = await axios.get("https://rej-server.onrender.com/companies");
+                const res = await api.get("/companies");
                 setCompanies(res.data || []);
             } catch (err) {
                 console.error("Company fetch error:", err);
@@ -67,7 +67,7 @@ const AddJobs = ({ onJobAdded, onClose }) => {
 
         try {
             setLoading(true);
-            await axios.post("https://rej-server.onrender.com/jobCategories", payload);
+            await api.post("/jobCategories", payload);
             alert("✅ Job added successfully");
 
             // Reset form

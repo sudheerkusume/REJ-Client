@@ -194,7 +194,7 @@
 // export default AddRecruiter;
 
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import api from "../config/api";
 import { useNavigate } from "react-router-dom";
 import { loginStatus } from "../App";
 
@@ -257,15 +257,7 @@ const AddRecruiter = () => {
         try {
             setLoading(true);
 
-            await axios.post(
-                "https://rej-server.onrender.com/admin/create-recruiter",
-                form,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            await api.post("/admin/create-recruiter", form);
 
             alert("Recruiter created successfully");
             navigate("/dashboard");

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../config/api";
 import {
     BsBuilding,
     BsCash,
@@ -14,8 +14,6 @@ import {
     BsQuestionCircle,
     BsCheckCircleFill
 } from "react-icons/bs";
-
-const API_BASE_URL = "https://rej-server.onrender.com"; // Change to http://localhost:5000 for local testing
 
 const Projects = () => {
     const [formData, setFormData] = useState({
@@ -66,7 +64,7 @@ const Projects = () => {
 
     // Fetch Companies
     useEffect(() => {
-        axios.get(`${API_BASE_URL}/companies`)
+        api.get("/companies")
             .then(res => {
                 // Ensure res.data is an array
                 if (Array.isArray(res.data)) {
@@ -115,11 +113,9 @@ const Projects = () => {
             gallery.forEach(img => data.append("gallery", img));
             amenitiesGallery.forEach(img => data.append("amenitiesGallery", img));
 
-            const token = localStorage.getItem("adminToken");
-            const response = await axios.post(`${API_BASE_URL}/projects`, data, {
+            const response = await api.post("/projects", data, {
                 headers: {
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${token}`
+                    "Content-Type": "multipart/form-data"
                 }
             });
 

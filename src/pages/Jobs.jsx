@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../config/api";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
@@ -8,8 +8,8 @@ const Jobs = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get("https://rej-server.onrender.com/jobCategories")
+    api
+      .get("/jobCategories")
       .then((res) => {
         const grouped = res.data.reduce((acc, job) => {
           if (!acc[job.category]) {

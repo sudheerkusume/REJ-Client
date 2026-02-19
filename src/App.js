@@ -6,7 +6,7 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import RecruiterProvider from "./context/RecruiterAuthContext";
+import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header";
 import Routing from "./routes/Routing";
 import Footer from "./components/Footer";
@@ -18,7 +18,7 @@ const App = () => {
   const [token, setToken] = useState("");
   const location = useLocation();
   useEffect(() => {
-    const savedToken = localStorage.getItem("adminToken");
+    const savedToken = localStorage.getItem("adminToken") || localStorage.getItem("authToken");
     if (savedToken) {
       setToken(savedToken);
     }
@@ -36,11 +36,12 @@ const App = () => {
   const hideLayout = location.pathname.startsWith("/admin") ||
     location.pathname.startsWith("/dashboard") ||
     location.pathname.startsWith("/recruiter") ||
+    location.pathname.startsWith("/company") ||
     location.pathname.includes("/projects/");
 
   return (
-    <loginStatus.Provider value={[token, setToken]}>
-      <RecruiterProvider>
+    <AuthProvider>
+      <loginStatus.Provider value={[token, setToken]}>
         <div className="App container-fluid p-0">
           {!hideLayout && <Header />}
 
@@ -49,8 +50,8 @@ const App = () => {
 
           {!hideLayout && <Footer />}
         </div>
-      </RecruiterProvider>
-    </loginStatus.Provider>
+      </loginStatus.Provider>
+    </AuthProvider>
   );
 };
 

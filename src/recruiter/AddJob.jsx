@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../config/api";
 import "../DashboardStyles.css";
 
 const AddJob = () => {
-    const token = localStorage.getItem("recruiterToken");
     const [loading, setLoading] = useState(false);
 
     const [job, setJob] = useState({
@@ -48,11 +47,7 @@ const AddJob = () => {
 
         try {
             setLoading(true);
-            await axios.post("https://rej-server.onrender.com/recruiter/jobs", payload, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            await api.post("/recruiter/jobs", payload);
             alert("✅ Job posted successfully!");
 
             // Reset form

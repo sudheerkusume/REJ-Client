@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../config/api";
 
 const AddService = () => {
     const [service, setService] = useState({
@@ -25,7 +25,7 @@ const AddService = () => {
         };
 
         try {
-            await axios.post("https://rej-server.onrender.com/Services", payload);
+            await api.post("/Services", payload);
             alert(" Service added successfully");
 
             setService({

@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
-import axios from "axios";
+import api from "../../config/api";
 import { useNavigate } from "react-router-dom";
 import { loginStatus } from "../../App";
+import { useAuth } from "../../context/AuthContext";
 import image from "../../Accets/Login_Image.png";
 
 const Login = () => {
@@ -10,10 +11,11 @@ const Login = () => {
         password: ""
     });
 
-    const [loginType, setLoginType] = useState("user"); // 🔑 NEW
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const [token, setToken] = useContext(loginStatus);
+    const [, setLegacyToken] = useContext(loginStatus);
+    const { login } = useAuth();
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,28 +24,45 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
+        setLoading(true);
 
         try {
-            // 🔥 SWITCH API BASED ON ROLE
-            const url =
-                loginType === "user"
-                    ? "https://rej-server.onrender.com/users/login"
-                    : "https://rej-server.onrender.com/recruiter/login";
+            const res = await api.post(
+                "/auth/login",
+                form
+            );
 
-            const res = await axios.post(url, form);
+            const { token, role, user } = res.data;
 
-            // 🔐 STORE TOKEN BASED ON ROLE
-            if (loginType === "user") {
-                localStorage.setItem("userToken", res.data.token);
-                setToken(res.data.token);
-                navigate("/account");
-            } else {
-                localStorage.setItem("recruiterToken", res.data.token);
-                navigate("/recruiter/dashboard");
+            // Set unified auth context
+            login(token, role, user);
+
+            // Set legacy token for admin backward compat
+            if (role === "admin") {
+                setLegacyToken(token);
             }
 
+            // Navigate based on role
+            switch (role) {
+                case "user":
+                    navigate("/account");
+                    break;
+                case "recruiter":
+                    navigate("/recruiter/dashboard");
+                    break;
+                case "company":
+                    navigate("/company/dashboard");
+                    break;
+                case "admin":
+                    navigate("/dashboard");
+                    break;
+                default:
+                    navigate("/account");
+            }
         } catch (err) {
             setError(err.response?.data?.message || "Login failed");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -62,28 +81,7 @@ const Login = () => {
             {/* Right Side */}
             <div className="auth-right">
                 <div className="auth-form-container">
-                    <h2 className="mb-4 fw-bold text-dark">
-                        {loginType === "user" ? "User Login" : "Recruiter Login"}
-                    </h2>
-
-                    {/* 🔁 ROLE SWITCH */}
-                    <div className="mb-4 d-flex gap-3">
-                        <button
-                            type="button"
-                            className={`btn ${loginType === "user" ? "btn-dark" : "btn-outline-dark"}`}
-                            onClick={() => setLoginType("user")}
-                        >
-                            User
-                        </button>
-
-                        <button
-                            type="button"
-                            className={`btn ${loginType === "recruiter" ? "btn-dark" : "btn-outline-dark"}`}
-                            onClick={() => setLoginType("recruiter")}
-                        >
-                            Recruiter
-                        </button>
-                    </div>
+                    <h2 className="mb-4 fw-bold text-dark">Login</h2>
 
                     {error && <div className="alert alert-danger">{error}</div>}
 
@@ -112,15 +110,15 @@ const Login = () => {
                             />
                         </div>
 
-                        <button className="auth-btn">Login</button>
+                        <button className="auth-btn" disabled={loading}>
+                            {loading ? "Logging in..." : "Login"}
+                        </button>
                     </form>
 
-                    {loginType === "user" && (
-                        <p className="auth-footer">
-                            Don’t have an account?
-                            <span onClick={() => navigate("/signup")}> Sign Up</span>
-                        </p>
-                    )}
+                    <p className="auth-footer">
+                        Don't have an account?
+                        <span onClick={() => navigate("/signup")}> Sign Up</span>
+                    </p>
                 </div>
             </div>
         </div>

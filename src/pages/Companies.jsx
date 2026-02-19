@@ -113,7 +113,7 @@
 // };
 
 // export default Companies;
-import axios from "axios";
+import api from "../config/api";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BsBookmark, BsGeoAlt, BsGlobe, BsBuilding } from "react-icons/bs";
@@ -124,7 +124,7 @@ const Companies = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("https://rej-server.onrender.com/companies")
+    api.get("/companies")
       .then(res => setCompanies(res.data))
       .catch(err => console.log(err))
       .finally(() => setLoading(false));

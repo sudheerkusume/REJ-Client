@@ -1,5 +1,5 @@
 import Aos from "aos";
-import axios from "axios";
+import api from "../config/api";
 import React, { useEffect, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ const City = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("https://rej-server.onrender.com/jobCategories").then((res) => {
+    api.get("/jobCategories").then((res) => {
       const grouped = res.data.reduce((acc, job) => {
         if (!acc[job.location]) {
           acc[job.location] = {

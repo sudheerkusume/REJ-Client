@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../config/api";
 import { useParams, useNavigate } from "react-router-dom";
 import { FiArrowLeft, FiMail, FiMapPin, FiPhone, FiDownload, FiCheckCircle, FiUser } from "react-icons/fi";
 import "../DashboardStyles.css";
@@ -8,16 +8,14 @@ const RecruiterCandidateProfile = ({ id: propId, setView }) => {
     const { id: paramId } = useParams();
     const id = propId || paramId;
     const navigate = useNavigate();
-    const token = localStorage.getItem("recruiterToken");
+    const token = localStorage.getItem("authToken") || localStorage.getItem("recruiterToken");
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!token) return navigate("/recruiter");
+        if (!token) return navigate("/login");
 
-        axios.get(`https://rej-server.onrender.com/recruiter/candidate/${id}`, {
-            headers: { Authorization: `Bearer ${token}` }
-        })
+        api.get(`/recruiter/candidate/${id}`)
             .then(res => {
                 setUser(res.data);
                 setLoading(false);

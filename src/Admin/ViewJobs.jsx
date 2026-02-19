@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import api from "../config/api";
 import AddJobs from "./AddJobs";
 import {
     FiSearch, FiEdit3, FiTrash2, FiMapPin, FiBriefcase,
@@ -57,7 +57,7 @@ const EditJobModal = ({ isOpen, onClose, jobData, onJobUpdated }) => {
                 responsibilities: editData.responsibilities ? editData.responsibilities.split(',').map(i => i.trim()).filter(Boolean) : [],
                 skills: editData.skills ? editData.skills.split(',').map(i => i.trim()).filter(Boolean) : []
             };
-            await axios.put(`https://rej-server.onrender.com/jobCategories/${editData._id}`, payload);
+            await api.put(`/jobCategories/${editData._id}`, payload);
             alert("✅ Updated successfully");
             onJobUpdated?.();
             onClose();
@@ -157,7 +157,7 @@ const DeleteConfirmModal = ({ isOpen, onClose, jobData, onConfirm }) => {
     const handleDelete = async () => {
         try {
             setDeleting(true);
-            await axios.delete(`https://rej-server.onrender.com/jobCategories/${jobData._id}`);
+            await api.delete(`/jobCategories/${jobData._id}`);
             alert("🗑️ Job deleted successfully");
             onConfirm?.();
             onClose();
@@ -222,7 +222,7 @@ const ViewJobs = () => {
     // Fetch jobs
     const fetchJobs = async () => {
         try {
-            const res = await axios.get("https://rej-server.onrender.com/jobCategories");
+            const res = await api.get("/jobCategories");
             setJobs(res.data || []);
         } catch (err) {
             console.error(err);

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate, NavLink } from "react-router-dom";
+import api from "../../config/api";
+import { useNavigate } from "react-router-dom";
 import { FaCheckCircle, FaEye, FaEyeSlash } from "react-icons/fa";
 import image from "../../Accets/Login_Image.png"
+
 const Signup = () => {
     const [form, setForm] = useState({
         name: "",
         email: "",
         password: "",
         confirmPassword: "",
-        role: "applicant" // default role
+        role: "applicant"
     });
 
     const [error, setError] = useState("");
@@ -37,11 +38,15 @@ const Signup = () => {
         }
 
         try {
-            const { confirmPassword, ...submitData } = form;
-            const res = await axios.post(
-                "https://rej-server.onrender.com/users/signup",
-                submitData
-            );
+            const { confirmPassword, role, ...submitData } = form;
+
+            // Route to correct endpoint based on role
+            const url =
+                role === "company"
+                    ? "/companies/signup"
+                    : "/users/signup";
+
+            const res = await api.post(url, submitData);
 
             setSuccess(res.data.message);
             setTimeout(() => navigate("/login"), 1500);
