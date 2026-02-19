@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import api from "../config/api";
-import { loginStatus } from "../App";
+import { useAuth } from "../context/AuthContext";
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
     PieChart, Pie, Cell
@@ -203,8 +203,7 @@ const AnimCounter = ({ target }) => {
 
 /* ═══════════════ MAIN WELCOME COMPONENT ═══════════════ */
 const Welcome = ({ userName }) => {
-    const [contextToken] = useContext(loginStatus);
-    const token = contextToken || localStorage.getItem("authToken");
+    const { token } = useAuth();
     const [stats, setStats] = useState({ total: 0, shortlisted: 0, selected: 0, rejected: 0 });
     const [recentApplications, setRecentApplications] = useState([]);
     const [loading, setLoading] = useState(true);

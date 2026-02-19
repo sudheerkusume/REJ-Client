@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import api from "../../config/api";
 import { useNavigate } from "react-router-dom";
-import { loginStatus } from "../../App";
 import { useAuth } from "../../context/AuthContext";
 import image from "../../Accets/Login_Image.png";
 
@@ -14,7 +13,6 @@ const Login = () => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const [, setLegacyToken] = useContext(loginStatus);
     const { login } = useAuth();
 
     const handleChange = (e) => {
@@ -37,11 +35,6 @@ const Login = () => {
             // Set unified auth context
             login(token, role, user);
 
-            // Set legacy token for admin backward compat
-            if (role === "admin") {
-                setLegacyToken(token);
-            }
-
             // Navigate based on role
             switch (role) {
                 case "user":
@@ -52,9 +45,6 @@ const Login = () => {
                     break;
                 case "company":
                     navigate("/company/dashboard");
-                    break;
-                case "admin":
-                    navigate("/dashboard");
                     break;
                 default:
                     navigate("/account");

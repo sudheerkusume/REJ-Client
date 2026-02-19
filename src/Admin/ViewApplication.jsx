@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../config/api";
-import { loginStatus } from "../App";
+import { useAuth } from "../context/AuthContext";
 import { FiSearch, FiFilter, FiUser, FiMail, FiMapPin, FiCalendar, FiClock } from "react-icons/fi";
 import "../DashboardStyles.css";
 
 const ViewApplication = () => {
-    const [token] = useContext(loginStatus);
+    const { token } = useAuth();
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");

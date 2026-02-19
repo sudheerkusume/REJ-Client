@@ -29,7 +29,6 @@ export const AuthProvider = ({ children }) => {
 
         // Legacy keys for backward compat during migration
         if (newRole === "user") localStorage.setItem("userToken", newToken);
-        if (newRole === "admin") localStorage.setItem("adminToken", newToken);
         if (newRole === "recruiter") localStorage.setItem("recruiterToken", newToken);
         if (newRole === "company") localStorage.setItem("companyToken", newToken);
     };
@@ -43,7 +42,6 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem("authToken");
         localStorage.removeItem("authRole");
         localStorage.removeItem("userToken");
-        localStorage.removeItem("adminToken");
         localStorage.removeItem("recruiterToken");
         localStorage.removeItem("companyToken");
     };
