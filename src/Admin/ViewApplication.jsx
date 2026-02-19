@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import api from "../config/api";
 import { loginStatus } from "../App";
 import { FiSearch, FiFilter, FiUser, FiMail, FiMapPin, FiCalendar, FiClock } from "react-icons/fi";
 import "../DashboardStyles.css";
@@ -15,11 +15,7 @@ const ViewApplication = () => {
     useEffect(() => {
         if (!token) return;
 
-        axios.get("https://rej-server.onrender.com/admin/applications", {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+        api.get("/admin/applications")
             .then(res => {
                 setApplications(res.data);
                 setLoading(false);
@@ -33,12 +29,9 @@ const ViewApplication = () => {
     /* ================= UPDATE STATUS ================= */
     const updateStatus = async (id, status) => {
         try {
-            await axios.put(
-                `https://rej-server.onrender.com/admin/application-status/${id}`,
-                { status },
-                {
-                    headers: { Authorization: `Bearer ${token}` }
-                }
+            await api.put(
+                `/admin/application-status/${id}`,
+                { status }
             );
             setApplications(prev => prev.map(app => app._id === id ? { ...app, status } : app));
             alert(`Status updated to ${status} and email sent!`);

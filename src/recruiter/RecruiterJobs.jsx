@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../config/api";
 import { FiSearch, FiMapPin, FiBriefcase, FiCalendar, FiTrash2, FiEdit3 } from "react-icons/fi";
 import "../DashboardStyles.css";
 
 const RecruiterJobs = () => {
-    const token = localStorage.getItem("recruiterToken");
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
 
     const loadJobs = async () => {
         try {
-            const res = await axios.get("https://rej-server.onrender.com/recruiter/jobs", {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.get("/recruiter/jobs");
             setJobs(res.data || []);
             setLoading(false);
         } catch (err) {
@@ -23,15 +20,13 @@ const RecruiterJobs = () => {
     };
 
     useEffect(() => {
-        if (token) loadJobs();
-    }, [token]);
+        loadJobs();
+    }, []);
 
     const deleteJob = async (id) => {
         if (!window.confirm("Are you sure you want to delete this job posting?")) return;
         try {
-            await axios.delete(`https://rej-server.onrender.com/recruiter/jobs/${id}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            await api.delete(`/recruiter/jobs/${id}`);
             setJobs(jobs.filter(j => j._id !== id));
             alert("Job deleted successfully!");
         } catch (err) {

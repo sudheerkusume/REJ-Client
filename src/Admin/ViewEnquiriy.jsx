@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../config/api';
 import { FiSearch, FiEdit2, FiTrash2, FiUser, FiSmartphone, FiMail, FiMessageSquare, FiX } from 'react-icons/fi';
 
 const ViewEnquiry = () => {
@@ -34,7 +34,7 @@ const ViewEnquiry = () => {
     }, [searchTerm, enquiries]);
 
     const fetchEnquiries = () => {
-        axios.get(`https://rej-server.onrender.com/enquiries`)
+        api.get("/enquiries")
             .then((res) => {
                 setEnquiries(res.data);
                 setFilteredEnquiries(res.data);
@@ -44,7 +44,7 @@ const ViewEnquiry = () => {
 
     const deleteEnq = (enqId) => {
         if (window.confirm("Are you sure you want to delete this enquiry?")) {
-            axios.delete(`https://rej-server.onrender.com/enquiries/${enqId}`)
+            api.delete(`/enquiries/${enqId}`)
                 .then(() => {
                     fetchEnquiries();
                 })
@@ -53,7 +53,7 @@ const ViewEnquiry = () => {
     };
 
     const getOneRecord = (enqId) => {
-        axios.get(`https://rej-server.onrender.com/enquiries/${enqId}`)
+        api.get(`/enquiries/${enqId}`)
             .then((res) => {
                 setName(res.data.name);
                 setMobile(res.data.mobile);
@@ -72,7 +72,7 @@ const ViewEnquiry = () => {
 
     const updateEnq = (e) => {
         e.preventDefault();
-        axios.put(`https://rej-server.onrender.com/enquiries/${_id}`, {
+        api.put(`/enquiries/${_id}`, {
             name,
             mobile,
             email,

@@ -1,33 +1,34 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FiLogIn } from "react-icons/fi";
-import { loginStatus } from "../App";
+import { useAuth } from "../context/AuthContext";
+import api from "../config/api";
 import Logo from "../Accets/image.png";
 
 const Header = () => {
-  const [token, setToken] = useContext(loginStatus);
+  const { token, role, logout } = useAuth();
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedToken = token || localStorage.getItem("userToken");
-    if (!storedToken) return;
+    const storedToken = token || localStorage.getItem("authToken") || localStorage.getItem("userToken");
+    if (!storedToken) {
+      setUser(null);
+      return;
+    }
 
-    // Fetch user profile if token exists
-    fetch("https://rej-server.onrender.com/user/profile", {
-      headers: { Authorization: `Bearer ${storedToken}` },
-    })
-      .then((res) => res.json())
-      .then((data) => setUser(data))
+    api.get("/auth/me")
+      .then((res) => setUser(res.data))
       .catch(() => {
-        setToken("");
-        localStorage.removeItem("userToken");
+        // Fallback to legacy endpoint
+        api.get("/user/profile")
+          .then((res) => setUser(res.data))
+          .catch(() => setUser(null));
       });
-  }, [token, setToken]);
+  }, [token]);
 
   const handleLogout = () => {
-    setToken("");
-    localStorage.removeItem("userToken");
+    logout();
     setUser(null);
     navigate("/login");
   };
@@ -98,7 +99,9 @@ const Header = () => {
                   </button>
                   <ul className="dropdown-menu dropdown-menu-end custom-dropdown" aria-labelledby="userDropdown">
                     <li>
-                      <NavLink className="dropdown-item" to="/account" onClick={closeNavbar}>Account</NavLink>
+                      <NavLink className="dropdown-item" to={role === "company" ? "/company/dashboard" : "/account"} onClick={closeNavbar}>
+                        {role === "company" ? "Company Dashboard" : "Account"}
+                      </NavLink>
                     </li>
                     <li><hr className="dropdown-divider" /></li>
                     <li>

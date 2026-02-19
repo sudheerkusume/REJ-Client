@@ -218,9 +218,10 @@ import ViewJobs from './ViewJobs';
 import VLogo from '../Accets/briefcase_12418626.png'
 import ViewEnquiry from './ViewEnquiriy';
 import { loginStatus } from '../App';
+import { useAuth } from '../context/AuthContext';
 import Checkin from './Checkin';
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios';
+import api from '../config/api';
 import DefaultAdmin from '../Accets/Admin.png'
 import ViewApplication from './ViewApplication'
 import { FiSearch, FiBell, FiMail as FiMailIcon } from 'react-icons/fi';
@@ -230,18 +231,15 @@ const Dashboard = () => {
     const [view, Setview] = useState("");
     const [showMenu, setShowMenu] = useState(false);
     const [token, setToken] = useContext(loginStatus);// For mobile toggle if needed, or using bootstrap collapse
+    const { logout: authLogout } = useAuth();
     const navigate = useNavigate();
     const [user, setUser] = useState({})
 
     useEffect(() => {
         if (!token) return;
 
-        axios
-            .get("https://rej-server.onrender.com/dashboard", {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+        api
+            .get("/dashboard")
             .then((res) => {
                 setUser(res.data);
             })
@@ -254,7 +252,7 @@ const Dashboard = () => {
 
 
     const handleLogout = () => {
-        localStorage.removeItem("adminToken");
+        authLogout();
         setToken("");
         setUser({});
         navigate("/admin");
@@ -383,7 +381,7 @@ const Dashboard = () => {
                                     <img
                                         src={
                                             user?.profileImage
-                                                ? `http://localhost:5000${user.profileImage}`
+                                                ? `${api.defaults.baseURL}${user.profileImage}`
                                                 : DefaultAdmin
                                         }
                                         alt="Admin"

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../config/api";
 
 const RecruiterApplications = () => {
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const recruiterToken = localStorage.getItem("recruiterToken");
+    const recruiterToken = localStorage.getItem("authToken") || localStorage.getItem("recruiterToken");
 
     useEffect(() => {
         if (!recruiterToken) {
@@ -14,12 +14,8 @@ const RecruiterApplications = () => {
             return;
         }
 
-        axios
-            .get("https://rej-server.onrender.com/recruiter/applications", {
-                headers: {
-                    Authorization: `Bearer ${recruiterToken}`,
-                },
-            })
+        api
+            .get("/recruiter/applications")
             .then((res) => {
                 setApplications(res.data);
                 setLoading(false);

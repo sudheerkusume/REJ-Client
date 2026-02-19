@@ -1,18 +1,22 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate, NavLink } from "react-router-dom";
-import { FaCheckCircle } from "react-icons/fa";
+import api from "../../config/api";
+import { useNavigate } from "react-router-dom";
+import { FaCheckCircle, FaEye, FaEyeSlash } from "react-icons/fa";
 import image from "../../Accets/Login_Image.png"
+
 const Signup = () => {
     const [form, setForm] = useState({
         name: "",
         email: "",
         password: "",
-        role: "applicant" // default role
+        confirmPassword: "",
+        role: "applicant"
     });
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -28,11 +32,21 @@ const Signup = () => {
         setError("");
         setSuccess("");
 
+        if (form.password !== form.confirmPassword) {
+            setError("Passwords do not match");
+            return;
+        }
+
         try {
-            const res = await axios.post(
-                "https://rej-server.onrender.com/users/signup",
-                form
-            );
+            const { confirmPassword, role, ...submitData } = form;
+
+            // Route to correct endpoint based on role
+            const url =
+                role === "company"
+                    ? "/companies/signup"
+                    : "/users/signup";
+
+            const res = await api.post(url, submitData);
 
             setSuccess(res.data.message);
             setTimeout(() => navigate("/login"), 1500);
@@ -45,10 +59,6 @@ const Signup = () => {
         <div className="auth-split-wrapper">
             {/* Left Side - Visual */}
             <div className="auth-left" style={{ backgroundImage: `url(${image})` }}>
-                <div className="auth-left-content">
-                    <h1>Register for <br /><span>Real Estate Jobs</span></h1>
-                    <p className="lead mt-3">Join us! To apply for your Poppinsested Real Estate Jobs and build your career.</p>
-                </div>
             </div>
 
             {/* Right Side - Form */}
@@ -84,42 +94,80 @@ const Signup = () => {
 
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4 auth-input-group">
-                            <label>Your Full Name*</label>
+                            <label>{form.role === 'company' ? 'Company Name*' : 'Your Full Name*'}</label>
                             <input
                                 type="text"
                                 name="name"
                                 className="auth-input"
-                                placeholder="Enter Your Name"
+                                placeholder={form.role === 'company' ? 'Enter Company Name' : 'Enter Your Name'}
                                 required
                                 value={form.name}
                                 onChange={handleChange}
                             />
                         </div>
                         <div className="mb-4 auth-input-group">
-                            <label>Your Email*</label>
+                            <label>{form.role === 'company' ? 'Company Email*' : 'Your Email*'}</label>
                             <input
                                 type="email"
                                 name="email"
                                 className="auth-input"
-                                placeholder="Enter Your Email"
+                                placeholder={form.role === 'company' ? 'Enter Company Email' : 'Enter Your Email'}
                                 required
                                 value={form.email}
                                 onChange={handleChange}
                             />
                         </div>
 
-                        <div className="mb-5 auth-input-group">
+                        <div className="mb-4 auth-input-group">
                             <label>Password*</label>
-                            <input
-                                type="password"
-                                name="password"
-                                className="auth-input"
-                                placeholder="Enter Password (min. 6 characters)"
-                                required
-                                value={form.password}
-                                onChange={handleChange}
-                            />
+                            <div className="auth-input-wrapper">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    name="password"
+                                    className="auth-input"
+                                    placeholder="Enter Password (min. 6 characters)"
+                                    required
+                                    minLength={6}
+                                    value={form.password}
+                                    onChange={handleChange}
+                                />
+                                <span className="auth-eye-icon" onClick={() => setShowPassword(!showPassword)}>
+                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                </span>
+                            </div>
                         </div>
+
+                        <div className="mb-4 auth-input-group">
+                            <label>Confirm Password*</label>
+                            <div className="auth-input-wrapper">
+                                <input
+                                    type={showConfirmPassword ? "text" : "password"}
+                                    name="confirmPassword"
+                                    className="auth-input"
+                                    placeholder="Confirm Password"
+                                    required
+                                    value={form.confirmPassword}
+                                    onChange={handleChange}
+                                />
+                                <span className="auth-eye-icon" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                                    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                                </span>
+                            </div>
+                        </div>
+
+                        {form.role === 'company' && (
+                            <div className="role-info-box">
+                                <strong>Role Information:</strong>
+                                <p>Post job listings, manage recruiters and company projects</p>
+                            </div>
+                        )}
+
+                        {form.role === 'applicant' && (
+                            <div className="role-info-box">
+                                <strong>Role Information:</strong>
+                                <p>Apply for jobs, build your profile and track applications</p>
+                            </div>
+                        )}
 
                         <button className="auth-btn">
                             Register

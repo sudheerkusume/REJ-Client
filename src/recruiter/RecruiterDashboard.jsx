@@ -110,8 +110,9 @@
 // export default RecruiterDashboard;
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../config/api";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import {
     FiGrid,
     FiUsers,
@@ -138,6 +139,7 @@ import RecruiterCandidateProfile from "../pages/RecruiterCandidateProfile";
 
 const RecruiterDashboard = () => {
     const navigate = useNavigate();
+    const { logout: authLogout } = useAuth();
     const [view, setView] = useState("dashboard"); // dashboard, applications, jobs, addjob, candidate-profile
     const [selectedCandidateId, setSelectedCandidateId] = useState(null);
     const [stats, setStats] = useState({});
@@ -150,32 +152,28 @@ const RecruiterDashboard = () => {
     };
 
     useEffect(() => {
-        const token = localStorage.getItem("recruiterToken");
-        if (!token) return navigate("/recruiter");
+        const token = localStorage.getItem("authToken") || localStorage.getItem("recruiterToken");
+        if (!token) return navigate("/login");
 
         // Fetch Stats
-        axios
-            .get("https://rej-server.onrender.com/recruiter/dashboard-stats", {
-                headers: { Authorization: `Bearer ${token}` }
-            })
+        api
+            .get("/recruiter/dashboard-stats")
             .then(res => {
                 setStats(res.data);
                 setLoading(false);
             })
-            .catch(() => navigate("/recruiter"));
+            .catch(() => navigate("/login"));
 
         // Fetch Profile for Name
-        axios
-            .get("https://rej-server.onrender.com/recruiter/profile", {
-                headers: { Authorization: `Bearer ${token}` }
-            })
+        api
+            .get("/recruiter/profile")
             .then(res => setRecruiterName(res.data.name))
             .catch(() => { });
     }, [navigate]);
 
     const handleLogout = () => {
-        localStorage.removeItem("recruiterToken");
-        navigate("/recruiter");
+        authLogout();
+        navigate("/login");
     };
 
     const statCards = [

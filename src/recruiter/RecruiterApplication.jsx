@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../config/api";
 import { FiSearch, FiFilter, FiMail, FiCalendar, FiClock } from "react-icons/fi";
 import "../DashboardStyles.css";
 import { useNavigate } from "react-router-dom";
 
 const RecruiterApplication = ({ onViewProfile }) => {
-    const token = localStorage.getItem("recruiterToken");
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
@@ -15,13 +14,7 @@ const RecruiterApplication = ({ onViewProfile }) => {
 
     /* ================= FETCH APPLICATIONS ================= */
     useEffect(() => {
-        if (!token) return;
-
-        axios.get("https://rej-server.onrender.com/recruiter/applications", {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+        api.get("/recruiter/applications")
             .then(res => {
                 setApplications(res.data || []);
                 setLoading(false);
@@ -30,19 +23,14 @@ const RecruiterApplication = ({ onViewProfile }) => {
                 console.error(err);
                 setLoading(false);
             });
-    }, [token]);
+    }, []);
 
     /* ================= UPDATE STATUS ================= */
     const updateStatus = async (id, status) => {
         try {
-            await axios.put(
-                `https://rej-server.onrender.com/recruiter/application-status/${id}`,
-                { status },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
+            await api.put(
+                `/recruiter/application-status/${id}`,
+                { status }
             );
 
             // update UI instantly

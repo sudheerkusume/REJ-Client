@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../../config/api";
 import { BsArrowRight } from "react-icons/bs";
 
 const CompanyProjects = ({ company }) => {
@@ -12,7 +12,7 @@ const CompanyProjects = ({ company }) => {
 
         const fetchStandalone = async () => {
             try {
-                const res = await axios.get(`https://rej-server.onrender.com/projects/company/${company._id}`);
+                const res = await api.get(`/projects/company/${company._id}`);
                 setStandaloneProjects(res.data || []);
             } catch (err) {
                 console.error("Error fetching standalone projects:", err);

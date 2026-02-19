@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
-import axios from "axios";
+import api from "../config/api";
 import ProjectFooter from "../components/ProjectFooter";
 import {
     BsGeoAlt,
@@ -150,7 +150,7 @@ const ProjectDetails = () => {
             try {
                 // 1. Try fetching from the standalone projects endpoint first
                 try {
-                    const standaloneRes = await axios.get(`https://rej-server.onrender.com/projects/${projectId}`);
+                    const standaloneRes = await api.get(`/projects/${projectId}`);
                     if (standaloneRes.data && standaloneRes.data._id) {
                         setProject(standaloneRes.data);
                         // Company comes populated or we fetch it
@@ -158,7 +158,7 @@ const ProjectDetails = () => {
                             setCompany(standaloneRes.data.companyId);
                         } else {
                             // Fallback fetch company if not populated
-                            const companyRes = await axios.get(`https://rej-server.onrender.com/companies/${companyId}`);
+                            const companyRes = await api.get(`/companies/${companyId}`);
                             setCompany(companyRes.data);
                         }
                         setLoading(false);
@@ -169,7 +169,7 @@ const ProjectDetails = () => {
                 }
 
                 // 2. Fallback to Legacy: Search nested projects in the companies collection
-                const companiesRes = await axios.get("https://rej-server.onrender.com/companies");
+                const companiesRes = await api.get("/companies");
                 const foundCompany = companiesRes.data.find(c => c._id === companyId);
 
                 if (foundCompany) {
@@ -253,7 +253,7 @@ const ProjectDetails = () => {
                 companyId: companyId
             };
 
-            await axios.post("https://rej-server.onrender.com/Enquiries", payload);
+            await api.post("/Enquiries", payload);
             setFormStatus({ loading: false, success: true, error: null });
             setContactForm({
                 firstName: '', lastName: '', phoneCode: '+971', phone: '',
@@ -304,7 +304,7 @@ const ProjectDetails = () => {
     const getImgUrl = (path) => {
         if (!path) return "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200";
         if (path.startsWith("http")) return path;
-        if (path.startsWith("/uploads")) return `http://localhost:5000${path}`;
+        if (path.startsWith("/uploads")) return `${api.defaults.baseURL}${path}`;
         return path;
     };
 

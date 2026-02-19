@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../config/api";
 
 const AddCompany = () => {
     const [company, setCompany] = useState({
@@ -43,7 +43,7 @@ const AddCompany = () => {
         };
 
         try {
-            await axios.post("https://rej-server.onrender.com/companies", payload);
+            await api.post("/companies", payload);
             alert("Company added successfully");
 
             setCompany({

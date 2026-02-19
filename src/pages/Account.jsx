@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import api from "../config/api";
 import { useNavigate } from "react-router-dom";
-import { loginStatus } from "../App";
+import { useAuth } from "../context/AuthContext";
 import { BsGrid, BsListTask, BsBookmark, BsBoxArrowRight, BsBriefcase, BsCheckCircle, BsXCircle } from "react-icons/bs";
 import "./Account.css";
 
 const Account = () => {
-    const [token, setToken] = useContext(loginStatus);
+    const { token, logout } = useAuth();
     const navigate = useNavigate();
 
     const [user, setUser] = useState(null);
@@ -17,18 +17,14 @@ const Account = () => {
 
     // Tab State
     const [activeTab, setActiveTab] = useState("overview");
+
+    const getToken = () => token || localStorage.getItem("authToken") || localStorage.getItem("userToken");
+
     //  ==============Fetch saved Jobs======================
     const fetchSavedJobs = async () => {
-        const storedToken = token || localStorage.getItem("userToken");
-        if (!storedToken) return;
-
         try {
             setLoadingSaved(true);
-            const res = await axios.get("https://rej-server.onrender.com/saved-jobs", {
-                headers: {
-                    Authorization: `Bearer ${storedToken}`,
-                },
-            });
+            const res = await api.get("/saved-jobs");
             setSavedJobs(res.data);
         } catch (err) {
             console.error("Failed to fetch saved jobs", err);
@@ -38,7 +34,7 @@ const Account = () => {
     };
     /* ================= AUTH + PROFILE ================= */
     useEffect(() => {
-        const storedToken = token || localStorage.getItem("userToken");
+        const storedToken = getToken();
 
         if (!storedToken) {
             navigate("/login");
@@ -47,40 +43,29 @@ const Account = () => {
 
         const fetchProfile = async () => {
             try {
-                const res = await axios.get(
-                    "https://rej-server.onrender.com/user/profile",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${storedToken}`,
-                        },
-                    }
-                );
+                // Try unified endpoint first
+                const res = await api.get("/auth/me");
                 setUser(res.data);
             } catch (err) {
-                setToken("");
-                localStorage.removeItem("userToken");
-                navigate("/login");
+                // Fallback to legacy endpoint
+                try {
+                    const res = await api.get("/user/profile");
+                    setUser(res.data);
+                } catch {
+                    logout();
+                    navigate("/login");
+                }
             }
         };
 
         fetchProfile();
-    }, [token, navigate, setToken]);
+    }, [token, navigate]);
 
     /* ================= FETCH APPLICATIONS ================= */
     useEffect(() => {
-        const storedToken = token || localStorage.getItem("userToken");
-        if (!storedToken) return;
-
         const fetchApplications = async () => {
             try {
-                const res = await axios.get(
-                    "https://rej-server.onrender.com/my-applications",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${storedToken}`,
-                        },
-                    }
-                );
+                const res = await api.get("/my-applications");
                 setApplications(res.data);
             } catch (err) {
                 console.error(err);
@@ -100,16 +85,7 @@ const Account = () => {
         if (!confirm) return;
 
         try {
-            const storedToken = token || localStorage.getItem("userToken");
-
-            await axios.delete(
-                `https://rej-server.onrender.com/my-applications/${applicationId}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${storedToken}`,
-                    },
-                }
-            );
+            await api.delete(`/my-applications/${applicationId}`);
 
             // Remove from UI immediately
             setApplications((prev) =>
@@ -122,8 +98,7 @@ const Account = () => {
 
     /* ================= LOGOUT ================= */
     const handleLogout = () => {
-        setToken("");
-        localStorage.removeItem("userToken");
+        logout();
         navigate("/login");
     };
 
@@ -202,7 +177,7 @@ const Account = () => {
                         {/* HEADER */}
                         <div className="dashboard-header animate__animated animate__fadeInDown">
                             <h1 className="dashboard-title">Welcome back, {user?.email.split('@')[0]}!</h1>
-                            <p className="dashboard-subtitle">Here is what’s happening with your job search applications today.</p>
+                            <p className="dashboard-subtitle">Here is what's happening with your job search applications today.</p>
                         </div>
 
                         {/* STATS ROW (Always Visible or just on Overview) */}

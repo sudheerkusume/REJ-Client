@@ -18,6 +18,7 @@ import Account from '../pages/Account'
 import Dashboard from '../Admin/Dashboard'
 import RecruiterCheckin from '../recruiter/RecruiterCheckin'
 import RecruiterDashboard from '../recruiter/RecruiterDashboard'
+import CompanyDashboard from '../company/CompanyDashboard'
 import AddRecruiter from '../Admin/AddRecruiter'
 import AdminRoute from '../routes/AdminRoute'
 import RecruiterJobs from '../recruiter/RecruiterJobs';
@@ -39,6 +40,7 @@ const Routing = () => {
       <Route path='/dashboard' element={<Dashboard />} />
       <Route path='/recruiter' element={<RecruiterCheckin />} />
       <Route path='/recruiter/dashboard' element={<RecruiterDashboard />} />
+      <Route path='/company/dashboard' element={<CompanyDashboard />} />
       <Route path='/admin/add-recruiter' element={<AddRecruiter />} />
       <Route path='/jobs/category/:category' element={<JobsByCategory />} />
       <Route path="/jobs/:id" element={<JobSingle />} />

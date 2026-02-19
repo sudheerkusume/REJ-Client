@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../config/api";
 import React, { useState } from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
@@ -14,7 +14,7 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      await axios.post("https://rej-server.onrender.com/Enquiries", {
+      await api.post("/Enquiries", {
         user: name,
         mobile,
         email,
