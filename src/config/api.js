@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:5001",
+    baseURL: "https://rej-server-2ayv.onrender.com",
 });
 
 // Auto-attach auth token to every request
