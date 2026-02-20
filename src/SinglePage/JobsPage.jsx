@@ -1,4 +1,5 @@
 import api from "../config/api";
+import { formatSalary } from "../utils/formatSalary";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward, IoIosArrowDown, } from "react-icons/io";
@@ -238,10 +239,28 @@ const JobsPage = () => {
                         </div>
                       </div>
 
+                      {/* Preferred Areas Tags */}
+                      {job.preferredAreas?.length > 0 && (
+                        <div className="d-flex flex-wrap gap-1 mb-3">
+                          {job.preferredAreas.slice(0, 3).map((area, i) => (
+                            <span key={i} className="badge rounded-pill"
+                              style={{ background: '#e0f2fe', color: '#0369a1', fontSize: '10px', fontWeight: 600, padding: '4px 10px' }}>
+                              📍 {area}
+                            </span>
+                          ))}
+                          {job.preferredAreas.length > 3 && (
+                            <span className="badge rounded-pill"
+                              style={{ background: '#f1f5f9', color: '#64748b', fontSize: '10px', fontWeight: 600, padding: '4px 10px' }}>
+                              +{job.preferredAreas.length - 3} more
+                            </span>
+                          )}
+                        </div>
+                      )}
+
                       <div className="lux-card-footer border-top pt-3 mt-auto">
                         <div className="lux-salary d-flex flex-column">
                           <span className="small text-muted fw-normal">Package</span>
-                          <span>{job.salary || "Best in Industry"}</span>
+                          <span>{formatSalary(job.salary)}</span>
                         </div>
                         <button className="btn-apply-lux">View Job Details</button>
                       </div>

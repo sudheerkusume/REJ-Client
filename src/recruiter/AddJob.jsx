@@ -37,6 +37,13 @@ const AddJob = () => {
 
         const payload = {
             ...job,
+            salary: {
+                fixed: job.salary || '',
+                min: '',
+                max: '',
+                commission: '',
+                incentives: ''
+            },
             responsibilities: job.responsibilities
                 ? job.responsibilities.split(",").map(i => i.trim()).filter(Boolean)
                 : [],

@@ -7,11 +7,16 @@ import {
   BsBriefcase,
   BsShieldCheck,
   BsShare,
-  BsBookmark
+  BsBookmark,
+  BsCurrencyRupee,
+  BsPeople,
+  BsBuilding,
+  BsPinMap
 } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
 import { useAuth } from "../context/AuthContext";
+import { formatSalary } from "../utils/formatSalary";
 
 const JobSingle = () => {
   const { id } = useParams();
@@ -245,6 +250,105 @@ const JobSingle = () => {
             <h5 className="detail-section-title">Job Overview</h5>
             <p>{job.description}</p>
 
+            {/* ── Salary Breakdown ── */}
+            {job.salary && typeof job.salary === 'object' && (
+              <div className="mt-4">
+                <h5 className="detail-section-title">
+                  <BsCurrencyRupee className="me-2" />Compensation Details
+                </h5>
+                <div className="row g-3 mb-3">
+                  {job.salary.fixed && (
+                    <div className="col-sm-6 col-md-4">
+                      <div className="p-3 rounded-4 border" style={{ background: '#f8fafc' }}>
+                        <div className="small text-muted mb-1">Fixed Salary</div>
+                        <div className="fw-bold" style={{ color: '#0f172a' }}>₹{job.salary.fixed}</div>
+                      </div>
+                    </div>
+                  )}
+                  {(job.salary.min || job.salary.max) && (
+                    <div className="col-sm-6 col-md-4">
+                      <div className="p-3 rounded-4 border" style={{ background: '#f8fafc' }}>
+                        <div className="small text-muted mb-1">Salary Range</div>
+                        <div className="fw-bold" style={{ color: '#0f172a' }}>
+                          {job.salary.min && job.salary.max
+                            ? `₹${job.salary.min} - ₹${job.salary.max}`
+                            : job.salary.min ? `Min ₹${job.salary.min}` : `Max ₹${job.salary.max}`
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {job.salary.commission && (
+                    <div className="col-sm-6 col-md-4">
+                      <div className="p-3 rounded-4 border" style={{ background: '#f0fdf4' }}>
+                        <div className="small text-muted mb-1">Commission</div>
+                        <div className="fw-bold" style={{ color: '#16a34a' }}>{job.salary.commission}</div>
+                      </div>
+                    </div>
+                  )}
+                  {job.salary.incentives && (
+                    <div className="col-sm-6 col-md-4">
+                      <div className="p-3 rounded-4 border" style={{ background: '#fefce8' }}>
+                        <div className="small text-muted mb-1">Incentives</div>
+                        <div className="fw-bold" style={{ color: '#ca8a04' }}>{job.salary.incentives}</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* ── Preferred Areas ── */}
+            {job.preferredAreas?.length > 0 && (
+              <div className="mt-4">
+                <h5 className="detail-section-title">
+                  <BsPinMap className="me-2" />Preferred Areas
+                </h5>
+                <div className="d-flex flex-wrap gap-2">
+                  {job.preferredAreas.map((area, i) => (
+                    <span key={i} className="badge rounded-pill px-3 py-2"
+                      style={{ background: '#e0f2fe', color: '#0369a1', fontSize: '12px', fontWeight: 600 }}>
+                      📍 {area}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ── Target Audience ── */}
+            {job.targetAudience?.length > 0 && (
+              <div className="mt-4">
+                <h5 className="detail-section-title">
+                  <BsPeople className="me-2" />Who Should Apply
+                </h5>
+                <div className="d-flex flex-wrap gap-2">
+                  {job.targetAudience.map((audience, i) => (
+                    <span key={i} className="badge rounded-pill px-3 py-2"
+                      style={{ background: '#f3e8ff', color: '#7c3aed', fontSize: '12px', fontWeight: 600 }}>
+                      {audience}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ── Property Types ── */}
+            {job.propertyTypes?.length > 0 && (
+              <div className="mt-4">
+                <h5 className="detail-section-title">
+                  <BsBuilding className="me-2" />Property Types
+                </h5>
+                <div className="d-flex flex-wrap gap-2">
+                  {job.propertyTypes.map((pt, i) => (
+                    <span key={i} className="badge rounded-pill px-3 py-2"
+                      style={{ background: '#fef3c7', color: '#b45309', fontSize: '12px', fontWeight: 600 }}>
+                      🏢 {pt}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <h5 className="detail-section-title mt-4">
               Key Responsibilities
             </h5>
@@ -269,6 +373,17 @@ const JobSingle = () => {
             <div className="position-sticky" style={{ top: "110px" }}>
               <div className="apply-dock-card">
                 <h5 className="fw-bold mb-3">Package Detail</h5>
+
+                <div className="mb-3" style={{ fontSize: '18px', fontWeight: 700, color: '#0f172a' }}>
+                  {formatSalary(job.salary)}
+                </div>
+
+                {job.jobRoleType && (
+                  <div className="mb-2 small">
+                    <span className="text-muted">Role Type:</span>{" "}
+                    <strong>{job.jobRoleType}</strong>
+                  </div>
+                )}
 
                 <div className="mb-3">
                   <BsShieldCheck />{" "}

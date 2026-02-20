@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import api from "../config/api";
+import { formatSalary } from "../utils/formatSalary";
 import AddJobs from "./AddJobs";
 import {
     FiSearch, FiEdit3, FiTrash2, FiMapPin, FiBriefcase,
     FiChevronLeft, FiChevronRight, FiPlus, FiZap, FiX,
-    FiUsers, FiPhone, FiDollarSign, FiStar,
-    FiMonitor, FiTrendingUp, FiAward, FiGrid, FiLayers,
+    FiUsers, FiPhone,
+    FiTrendingUp, FiAward, FiGrid, FiLayers,
     FiHome, FiDatabase, FiShield, FiPenTool, FiCode,
-    FiMoreVertical, FiEye, FiCheckCircle, FiClock
+    FiEye, FiCheckCircle
 } from "react-icons/fi";
 
 /* ─────── CATEGORY ICON MAP ─────── */
@@ -112,7 +113,7 @@ const EditJobModal = ({ isOpen, onClose, jobData, onJobUpdated }) => {
                             </div>
                             <div className="col-md-6">
                                 <label className="vj-label">Salary</label>
-                                <input name="salary" value={editData.salary || ''} onChange={handleChange} className="vj-input" placeholder="₹25,000 - ₹40,000" />
+                                <input name="salary" value={typeof editData.salary === 'object' ? formatSalary(editData.salary) : (editData.salary || '')} onChange={handleChange} className="vj-input" placeholder="₹25,000 - ₹40,000" />
                             </div>
                             <div className="col-md-6">
                                 <label className="vj-label">Qualification</label>
@@ -217,7 +218,9 @@ const ViewJobs = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedJob, setSelectedJob] = useState(null);
+    const [prefilledData, setPrefilledData] = useState(null);
     const scrollRef = useRef(null);
+
 
     // Fetch jobs
     const fetchJobs = async () => {
@@ -259,6 +262,67 @@ const ViewJobs = () => {
     const openDeleteModal = (job) => {
         setSelectedJob(job);
         setShowDeleteModal(true);
+    };
+
+    // Auto Fill & Open Modal
+    const handleAutoFill = () => {
+        const templates = [
+            {
+                title: "Senior Property Consultant",
+                category: "Real Estate Sales",
+                company: "Global Estates",
+                location: "Hyderabad",
+                preferredArea: "Banjara Hills",
+                salary: { min: "6.0", max: "12.0", commission: "3-5%" },
+                type: "Full-time",
+                jobRoleType: "Site Based",
+                experience: "3-5 Years",
+                qualification: ["Graduation"],
+                skills: ["Negotiation", "Client Handling", "Market Research"],
+                description: "Join our high-performance sales team in Hyderabad. We offer luxury property portfolios and excellent incentives. \n\nKey Responsibilities:\n• Identify potential clients\n• Conduct site visits\n• Negotiate deals",
+                salesTargets: "2-3 bookings per month",
+                benefits: ["Petrol Allowance", "Closing Incentives"],
+                languages: ["english", "hindi", "telugu"],
+            },
+            {
+                title: "Digital Marketing Lead",
+                category: "Digital Marketing",
+                company: "Growth Hackers Real Estate",
+                location: "Mumbai",
+                preferredArea: "Andheri West",
+                salary: { min: "8.0", max: "15.0", commission: "Performance Based" },
+                type: "Full-time",
+                jobRoleType: "Hybrid",
+                experience: "5-7 Years",
+                qualification: ["Post Graduation"],
+                skills: ["SEO", "Google Ads", "Content Strategy"],
+                description: "Leading the digital presence for premium residential projects across Mumbai. \n\nFocus Areas:\n• Campaign Management\n• Lead Quality Analysis\n• Social Media Growth",
+                salesTargets: "Monthly lead generation targets",
+                benefits: ["Paid Tools Access", "Remote Work Option"],
+                languages: ["english", "hindi"],
+            },
+            {
+                title: "Inbound Tele-Sales Exec",
+                category: "Tele Caller",
+                company: "Home Connect Services",
+                location: "Bengaluru",
+                preferredArea: "Whitefield",
+                salary: { min: "2.5", max: "4.0", commission: "1-2%" },
+                type: "Full-time",
+                jobRoleType: "Office Based",
+                experience: "Beginner (0-1 Year)",
+                qualification: ["12th / Intermediate"],
+                skills: ["Communication", "Phone Etiquette", "Persuasion"],
+                description: "Handling inbound queries and converting them into site visits for prime locations in Bengaluru.",
+                salesTargets: "50-70 calls per day",
+                benefits: ["Mobile Allowance", "Attendance Bonus"],
+                languages: ["english", "hindi", "kannada"],
+            }
+        ];
+
+        const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
+        setPrefilledData(randomTemplate);
+        setShowAddModal(true);
     };
 
     // Scroll category strip
@@ -339,11 +403,11 @@ const ViewJobs = () => {
                         />
                     </div>
                     {/* Auto Create */}
-                    <button className="vj-btn-auto">
+                    <button className="vj-btn-auto" onClick={handleAutoFill}>
                         <FiZap size={15} /> Auto Create Job
                     </button>
                     {/* Create Job button → opens modal */}
-                    <button className="vj-btn-primary" onClick={() => setShowAddModal(true)}>
+                    <button className="vj-btn-primary" onClick={() => { setPrefilledData(null); setShowAddModal(true); }}>
                         <FiPlus size={16} /> Create Job
                     </button>
                 </div>
@@ -398,7 +462,7 @@ const ViewJobs = () => {
                                             {/* Salary & Commission */}
                                             <td>
                                                 <div style={{ color: '#0f172a', fontSize: '13px', fontWeight: 600 }}>
-                                                    {job.salary || 'Not specified'}
+                                                    {formatSalary(job.salary, 'Not specified')}
                                                 </div>
                                                 <div style={{ color: '#94a3b8', fontSize: '11px', fontWeight: 500 }}>
                                                     {job.type || 'N/A'}
@@ -477,7 +541,8 @@ const ViewJobs = () => {
                         <div className="vj-modal-body">
                             <AddJobs
                                 onJobAdded={fetchJobs}
-                                onClose={() => setShowAddModal(false)}
+                                onClose={() => { setShowAddModal(false); setPrefilledData(null); }}
+                                prefilledData={prefilledData}
                             />
                         </div>
                     </div>

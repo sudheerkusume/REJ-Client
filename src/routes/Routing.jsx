@@ -1,10 +1,8 @@
-import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import About from '../pages/About'
 import Contact from '../pages/Contact'
 import Companies from '../pages/Companies'
 import Products from '../pages/Products'
-import Jobs from '../pages/Jobs'
 import JobsPage from '../SinglePage/JobsPage'
 import JobSingle from '../DetailsPage/JobSingle'
 import JobsByCategory from '../Category_Jobs_Page/JobsByCategory'
@@ -42,7 +40,6 @@ const Routing = () => {
       <Route path='/jobs' element={<JobsPage />} />
 
       <Route path="/jobs/city/:cityName" element={<JobsByCity />} />
-      <Route path="/jobs/:id" element={<JobSingle />} />
 
       <Route path="/companies/:id" element={<CompaniesSingle />} />
       <Route path="/projects" element={<Nprojects />} />

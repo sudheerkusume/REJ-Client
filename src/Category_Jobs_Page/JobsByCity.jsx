@@ -1,4 +1,5 @@
 import api from "../config/api";
+import { formatSalary } from "../utils/formatSalary";
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 
@@ -53,8 +54,24 @@ const JobsByCity = () => {
 
                       <div className="job-tags mb-3">
                         <span>📍 {job.location}</span>
-                        <span>💰 {job.salary || "N/A"}</span>
+                        <span>💰 {formatSalary(job.salary, "N/A")}</span>
                       </div>
+                      {job.preferredAreas?.length > 0 && (
+                        <div className="d-flex flex-wrap gap-1 mb-2">
+                          {job.preferredAreas.slice(0, 2).map((area, i) => (
+                            <span key={i} className="badge rounded-pill"
+                              style={{ background: '#e0f2fe', color: '#0369a1', fontSize: '10px', fontWeight: 600, padding: '3px 8px' }}>
+                              {area}
+                            </span>
+                          ))}
+                          {job.preferredAreas.length > 2 && (
+                            <span className="badge rounded-pill"
+                              style={{ background: '#f1f5f9', color: '#64748b', fontSize: '10px', padding: '3px 8px' }}>
+                              +{job.preferredAreas.length - 2}
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     <div className="job-explore border-top pt-3">

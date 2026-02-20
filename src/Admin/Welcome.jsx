@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
+import { formatSalary } from "../utils/formatSalary";
 import api from "../config/api";
 import { useAuth } from "../context/AuthContext";
 import {
@@ -628,7 +629,7 @@ const Welcome = ({ userName }) => {
 
                                             <div className="d-flex justify-content-between align-items-center pt-3" style={{ borderTop: '1px solid #f1f5f9', paddingLeft: '8px' }}>
                                                 <span style={{ color: '#64748b', fontWeight: 600, fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                                    <FiBriefcase size={11} /> {app.jobId?.salary || "N/A"}
+                                                    <FiBriefcase size={11} /> {formatSalary(app.jobId?.salary, "N/A")}
                                                 </span>
                                                 <span style={{ color: '#6366f1', fontWeight: 700, fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px' }}>
                                                     <FiUsers size={11} /> {Math.floor(Math.random() * 5 + 1)} Applied

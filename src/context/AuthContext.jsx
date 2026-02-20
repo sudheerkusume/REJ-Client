@@ -12,9 +12,17 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const savedToken = localStorage.getItem("authToken");
         const savedRole = localStorage.getItem("authRole");
+        const savedUser = localStorage.getItem("authUser");
         if (savedToken) {
             setToken(savedToken);
             setRole(savedRole || "");
+            if (savedUser) {
+                try {
+                    setUser(JSON.parse(savedUser));
+                } catch (e) {
+                    console.error("Error parsing saved user", e);
+                }
+            }
         }
     }, []);
 
@@ -26,6 +34,9 @@ export const AuthProvider = ({ children }) => {
         // Store unified keys
         localStorage.setItem("authToken", newToken);
         localStorage.setItem("authRole", newRole);
+        if (userData) {
+            localStorage.setItem("authUser", JSON.stringify(userData));
+        }
 
         // Legacy keys for backward compat during migration
         if (newRole === "user") localStorage.setItem("userToken", newToken);
@@ -41,6 +52,7 @@ export const AuthProvider = ({ children }) => {
         // Clear all keys
         localStorage.removeItem("authToken");
         localStorage.removeItem("authRole");
+        localStorage.removeItem("authUser");
         localStorage.removeItem("userToken");
         localStorage.removeItem("recruiterToken");
         localStorage.removeItem("companyToken");

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import logo from '../Accets/image.png';
 import Welcome from '../Admin/Welcome';
 import AddJobs from '../Admin/AddJobs';
@@ -7,9 +7,7 @@ import AddCompany from '../Admin/AddCompany';
 import { IoIosArrowDown } from 'react-icons/io';
 import { FiLogOut } from 'react-icons/fi';
 import Dlogo from '../Accets/layout_13313006.png';
-import Llogo from '../Accets/circle_16012727.png';
 import SLogo from '../Accets/management-service_11253165.png';
-import CLogo from '../Accets/build-a-business_16120462.png';
 import "../DashboardStyles.css";
 import ViewJobs from '../Admin/ViewJobs';
 import VLogo from '../Accets/briefcase_12418626.png';
@@ -104,9 +102,9 @@ const CompanyDashboard = () => {
                         <button className={`dash-nav-item ${view === "Service" ? "active" : ""}`} onClick={() => { setView("Service"); setShowMenu(false); }}>
                             <span><img src={SLogo} className="dash-logo-icon" alt="TradoX" style={{ maxHeight: 20, width: '20px' }} />   </span> Add Service
                         </button>
-                        <button className={`dash-nav-item ${view === "Company" ? "active" : ""}`} onClick={() => { setView("Company"); setShowMenu(false); }}>
+                        {/* <button className={`dash-nav-item ${view === "Company" ? "active" : ""}`} onClick={() => { setView("Company"); setShowMenu(false); }}>
                             <span><img src={CLogo} className="dash-logo-icon" alt="TradoX" style={{ maxHeight: 20, width: '20px' }} />   </span> Company
-                        </button>
+                        </button> */}
                         <button className={`dash-nav-item ${view === "viewjob" ? "active" : ""}`} onClick={() => { setView("viewjob"); setShowMenu(false); }}>
                             <span><img src={VLogo} className="dash-logo-icon" alt="TradoX" style={{ maxHeight: 20, width: '20px' }} />   </span>  Jobs
                         </button>
