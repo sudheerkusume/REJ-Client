@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../config/api";
 import { FiSearch, FiFilter, FiMail, FiCalendar, FiClock } from "react-icons/fi";
 import "../DashboardStyles.css";
@@ -9,8 +9,6 @@ const RecruiterApplication = ({ onViewProfile }) => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("All");
-
-    const navigate = useNavigate();
 
     /* ================= FETCH APPLICATIONS ================= */
     useEffect(() => {

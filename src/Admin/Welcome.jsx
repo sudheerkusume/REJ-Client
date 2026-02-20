@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { formatSalary } from "../utils/formatSalary";
 import api from "../config/api";
 import { useAuth } from "../context/AuthContext";

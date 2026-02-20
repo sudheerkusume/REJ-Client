@@ -6,11 +6,6 @@ import {
     BsGeoAlt,
     BsArrowLeft,
     BsBuilding,
-    BsSquare,
-    BsCash,
-    BsLightningCharge,
-    BsTelephone,
-    BsInfoCircle,
     BsCalendarCheck,
     BsWallet2,
     BsTag,
@@ -22,8 +17,6 @@ import {
     BsQuestionCircle,
     BsChatDots,
     BsDownload,
-    BsPerson,
-    BsEnvelope,
     BsCheckCircleFill
 } from "react-icons/bs";
 import { FaWhatsapp } from "react-icons/fa";
@@ -57,7 +50,6 @@ const ProjectDetails = () => {
     const getAmenityIcon = useCallback((name) => {
         const lower = (name || '').toLowerCase();
         const iconProps = { width: "48", height: "48", viewBox: "0 0 64 64", fill: "none", stroke: "#bda68a", strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" };
-        const iconPropsSmall = { width: "36", height: "36", viewBox: "0 0 64 64", fill: "none", stroke: "#bda68a", strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" };
 
         if (lower.includes('pool') || lower.includes('aqua') || lower.includes('swimming') || lower.includes('splash')) {
             return <svg {...iconProps}><path d="M8 40c4-4 8 0 12-4s8 0 12-4 8 0 12-4 8 0 12-4" /><path d="M8 48c4-4 8 0 12-4s8 0 12-4 8 0 12-4 8 0 12-4" /><path d="M20 32c0-8 6-14 12-14s12 6 12 14" /><circle cx="32" cy="14" r="3" /></svg>;
