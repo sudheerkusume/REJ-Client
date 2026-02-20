@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import api from "../config/api";
 import { FiSearch, FiFilter, FiMail, FiCalendar, FiClock } from "react-icons/fi";
 import "../DashboardStyles.css";
-import { useNavigate } from "react-router-dom";
 
 const RecruiterApplication = ({ onViewProfile }) => {
     const [applications, setApplications] = useState([]);

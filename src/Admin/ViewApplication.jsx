@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../config/api";
 import { useAuth } from "../context/AuthContext";
-import { FiSearch, FiFilter, FiUser, FiMail, FiMapPin, FiCalendar, FiClock } from "react-icons/fi";
+import { FiSearch, FiFilter, FiMail, FiMapPin, FiCalendar, FiClock } from "react-icons/fi";
 import "../DashboardStyles.css";
 
 const ViewApplication = () => {

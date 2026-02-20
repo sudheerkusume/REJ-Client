@@ -273,7 +273,7 @@ const Home = () => {
 
         <div className="d-flex justify-content-between align-items-end mb-5">
           <h2 className="fw-bold m-0" style={{ fontSize: '36px', color: '#111' }}>Featured Jobs</h2>
-          <a href="#" className="text-dark fw-bold text-decoration-none">View All Opportunities &rarr;</a>
+          <a href="#!" className="text-dark fw-bold text-decoration-none">View All Opportunities &rarr;</a>
         </div>
 
         <div className="row">

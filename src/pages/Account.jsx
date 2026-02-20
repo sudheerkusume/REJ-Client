@@ -18,7 +18,7 @@ const Account = () => {
     // Tab State
     const [activeTab, setActiveTab] = useState("overview");
 
-    const getToken = () => token || localStorage.getItem("authToken") || localStorage.getItem("userToken");
+
 
     //  ==============Fetch saved Jobs======================
     const fetchSavedJobs = async () => {
@@ -34,6 +34,7 @@ const Account = () => {
     };
     /* ================= AUTH + PROFILE ================= */
     useEffect(() => {
+        const getToken = () => token || localStorage.getItem("authToken") || localStorage.getItem("userToken");
         const storedToken = getToken();
 
         if (!storedToken) {
@@ -59,7 +60,7 @@ const Account = () => {
         };
 
         fetchProfile();
-    }, [token, navigate]);
+    }, [token, navigate, logout]);
 
     /* ================= FETCH APPLICATIONS ================= */
     useEffect(() => {

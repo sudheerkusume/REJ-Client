@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../Accets/ChatGPT Image Jan 10, 2026, 06_28_46 PM.png';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import { BsEnvelope, BsGeoAlt, BsArrowRight } from "react-icons/bs";
+import { BsGeoAlt, BsArrowRight } from "react-icons/bs";
 
 const ProjectFooter = () => {
     return (
@@ -17,10 +17,10 @@ const ProjectFooter = () => {
                                 <strong>Real Estate Jobs, Inc</strong> – India’s premier dedicated platform connecting the world's most talented professionals with industry-leading developers and architectural firms.
                             </p>
                             <div className="footer-social-wrap mt-4">
-                                <a href="#" className="social-pill"><FaFacebookF /></a>
-                                <a href="#" className="social-pill"><FaTwitter /></a>
-                                <a href="#" className="social-pill"><FaInstagram /></a>
-                                <a href="#" className="social-pill"><FaLinkedinIn /></a>
+                                <a href="#!" className="social-pill"><FaFacebookF /></a>
+                                <a href="#!" className="social-pill"><FaTwitter /></a>
+                                <a href="#!" className="social-pill"><FaInstagram /></a>
+                                <a href="#!" className="social-pill"><FaLinkedinIn /></a>
                             </div>
                         </div>
                     </div>

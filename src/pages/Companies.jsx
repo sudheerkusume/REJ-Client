@@ -116,7 +116,7 @@
 import api from "../config/api";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { BsBookmark, BsGeoAlt, BsGlobe, BsBuilding } from "react-icons/bs";
+import { BsBookmark, BsGeoAlt, BsGlobe } from "react-icons/bs";
 import video from '../Accets/video.mp4';
 
 const Companies = () => {

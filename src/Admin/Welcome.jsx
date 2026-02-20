@@ -7,7 +7,7 @@ import {
     PieChart, Pie, Cell
 } from 'recharts';
 import {
-    FiMoreHorizontal, FiCalendar, FiArrowUpRight, FiUsers, FiBriefcase,
+    FiCalendar, FiUsers, FiBriefcase,
     FiCheckCircle, FiMonitor, FiPhone, FiClock, FiChevronLeft, FiChevronRight,
     FiTrendingUp, FiActivity, FiZap, FiStar, FiExternalLink
 } from "react-icons/fi";

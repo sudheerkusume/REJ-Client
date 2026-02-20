@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward, IoIosArrowDown, } from "react-icons/io";
 import { IoFilter, IoClose } from "react-icons/io5";
-import { BsGeoAlt, BsBuilding, BsClock, BsCash, BsBriefcase, BsLayoutTextWindowReverse, BsSearch } from "react-icons/bs";
+import { BsGeoAlt, BsClock, BsBriefcase, BsLayoutTextWindowReverse, BsSearch } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
 
 const JobsPage = () => {

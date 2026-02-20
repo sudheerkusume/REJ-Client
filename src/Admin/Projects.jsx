@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from "react";
 import api from "../config/api";
 import {
-    BsBuilding,
-    BsCash,
-    BsGeoAlt,
     BsPlusCircle,
     BsTrash,
     BsUpload,
-    BsCardText,
-    BsLink45Deg,
-    BsCalendarCheck,
-    BsListStars,
-    BsQuestionCircle,
     BsCheckCircleFill
 } from "react-icons/bs";
 
@@ -113,7 +105,7 @@ const Projects = () => {
             gallery.forEach(img => data.append("gallery", img));
             amenitiesGallery.forEach(img => data.append("amenitiesGallery", img));
 
-            const response = await api.post("/projects", data, {
+            await api.post("/projects", data, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }

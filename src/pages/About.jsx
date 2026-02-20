@@ -1,5 +1,5 @@
 import React from 'react';
-import { BsArrowRight, BsCheckCircle, BsPeople, BsLightbulb, BsShieldCheck, BsGlobe, BsHeart } from 'react-icons/bs';
+import { BsCheckCircle, BsPeople, BsLightbulb, BsShieldCheck, BsGlobe } from 'react-icons/bs';
 import { FaHandshake } from 'react-icons/fa';
 
 const About = () => {

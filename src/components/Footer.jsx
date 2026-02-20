@@ -92,16 +92,16 @@ const Footer = () => {
           </div>
           <div className="col-md-3 d-flex flex-column flex-sm-row justify-content-between align-items-center">
             <div className="d-flex gap-3 mt-3">
-              <a href="#" className="social-icon">
+              <a href="#!" className="social-icon">
                 <FaFacebookF />
               </a>
-              <a href="#" className="social-icon">
+              <a href="#!" className="social-icon">
                 <FaTwitter />
               </a>
-              <a href="#" className="social-icon">
+              <a href="#!" className="social-icon">
                 <FaInstagram />
               </a>
-              <a href="#" className="social-pill-original">
+              <a href="#!" className="social-pill-original">
                 <FaLinkedinIn />
               </a>
             </div>
